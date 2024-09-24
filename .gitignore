@@ -1,0 +1,16 @@
+# Entornos virtuales de Python
+venv
+__pycache__/
+
+.vercel/
+.env
+
+# Archivos de log y temporales
+*.log
+*.tmp
+*.pid
+*.pyc
+.DS_Store
+
+# Archivos y carpetas creados por el sistema operativo
+Thumbs.db
