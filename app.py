@@ -41,21 +41,23 @@ def analyze():
             
             # Analizar todos los archivos dentro del directorio extraído
             results = []
+            extensions = ['.cs', '.java', '.js', '.ts', '.kts', '.py', '.rb', '.cpp', '.c', '.php']
             for root, _, files in os.walk(extracted_dir):
                 for file in files:
-                    if file.endswith('.rb'):  # Puedes ajustar esto para otros lenguajes si es necesario
-                        file_path = os.path.join(root, file)
-                        analysis = lizard.analyze_file(file_path)  # Analizar archivo con lizard
-                        
-                        # Extraer métricas importantes
-                        for func in analysis.function_list:
-                            results.append({
-                                "file": file_path,
-                                "function_name": func.name,
-                                "nloc": func.nloc,  # Número de líneas de código
-                                "cyclomatic_complexity": func.cyclomatic_complexity,
-                                "token_count": func.token_count,
-                            })
+                    for ext in extensions:
+                        if file.endswith(ext): 
+                            file_path = os.path.join(root, file)
+                            analysis = lizard.analyze_file(file_path)  # Analizar archivo con lizard
+                            
+                            # Extraer métricas importantes
+                            for func in analysis.function_list:
+                                results.append({
+                                    "file": file_path,
+                                    "function_name": func.name,
+                                    "nloc": func.nloc,  # Número de líneas de código
+                                    "cyclomatic_complexity": func.cyclomatic_complexity,
+                                    "token_count": func.token_count,
+                                })
 
             # Devolver el resultado del análisis
             return jsonify({"metrics": results})
